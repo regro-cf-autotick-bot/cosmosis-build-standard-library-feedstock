@@ -3,11 +3,9 @@ MACOSX_DEPLOYMENT_TARGET:
 MACOSX_SDK_VERSION:
 - '11.0'
 channel_sources:
-- conda-forge
+- conda-forge,conda-forge/label/python_rc
 channel_targets:
 - conda-forge main
-llvm_openmp:
-- '21'
 macos_machine:
 - arm64-apple-darwin20.0.0
 mpi:
@@ -21,7 +19,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.12.* *_cpython
+- 3.15.* *_cp315
 target_platform:
 - osx-arm64
 zip_keys:

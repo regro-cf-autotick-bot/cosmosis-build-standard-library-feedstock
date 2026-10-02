@@ -1,0 +1,79 @@
+schema_version: 1
+
+context:
+  name: cosmosis-build-standard-library
+  version: "1.3"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | replace('-', '_') }}-${{ version }}.tar.gz
+  sha256: 4be70b07dd6d557021327f30b8f8561c8e78a37c5e5201ab23968166dd408414
+
+build:
+  number: 5
+  skip: ( (match(python, "<3.10")) or win )
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - if: build_platform != target_platform
+      then: python
+    - if: build_platform != target_platform
+      then: cross-python_${{ target_platform }}
+  host:
+    - python
+    - pip
+    - setuptools
+  run:
+    - python
+    - cosmosis
+    # For compiling standard librarymodules
+    - compilers
+    - ${{ mpi }}
+    - if: osx
+      then: llvm-openmp
+    - if: linux
+      then: libgomp
+    - bzip2
+    - cfitsio
+    - gsl
+    - fftw
+    - libblas
+    - liblapack
+    - camb >=1.3.0
+    - make
+    - numpy
+    # for running python standard library modules
+    - astropy-base
+    - cython
+    - scikit-learn
+    - fast-pt
+    - deepdish
+    - sacc
+
+tests:
+  - requirements:
+      run:
+        - pytest
+    script:
+      - cosmosis-build-standard-library && cd cosmosis-standard-library && source cosmosis-configure && pytest -vv -s tests
+      - cosmosis-build-standard-library -i && cd  `python -c 'import cosmosis;print(cosmosis.__file__)' | xargs dirname` && cd cosmosis-standard-library && cosmosis demos/demo1.ini && cosmosis-postprocess demos/demo1.ini && test -f matter_power.png
+
+about:
+  license: BSD-2-Clause
+  license_file: LICENSE
+  summary: CosmoSIS Standard Library
+  description: |
+    This is a meta-package providing the dependencies for the CosmoSIS Standard
+    Library.
+  homepage: https://github.com/joezuntz/cosmosis-standard-library
+  repository: https://github.com/joezuntz/cosmosis
+  documentation: https://cosmosis.readthedocs.io/
+
+extra:
+  recipe-maintainers:
+    - joezuntz
+    - marcpaterno
