@@ -6,11 +6,11 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/source/{{ name[0] }}/{{ name }}/{{ name | replace('-', '_') }}-{{ version }}.tar.gz
   sha256: 4be70b07dd6d557021327f30b8f8561c8e78a37c5e5201ab23968166dd408414
 
 build:
-  number: 3
+  number: 4
   skip: true  # [( (py < 310) or win )]
   script: "{{ PYTHON }} -m pip install . -vv"
 
