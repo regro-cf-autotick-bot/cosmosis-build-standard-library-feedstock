@@ -31,7 +31,7 @@ requirements:
     - python
     - cosmosis
     # For compiling standard librarymodules
-    - compilers
+    - compilers >=2
     - ${{ mpi }}
     - if: osx
       then: llvm-openmp
