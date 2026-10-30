@@ -54,7 +54,6 @@ requirements:
     - deepdish
     - sacc
     - scipy >=1.17
-    - cosmopower
 
 tests:
   - requirements:
