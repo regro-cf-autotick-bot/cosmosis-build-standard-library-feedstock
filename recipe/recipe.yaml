@@ -49,6 +49,7 @@ requirements:
     # for running python standard library modules
     - astropy-base
     - cython
+    - setuptools
     - scikit-learn
     - fast-pt
     - deepdish
@@ -60,6 +61,13 @@ tests:
       run:
         - pytest
         - camb ==2.0.0
+    script:
+      - cosmosis-build-standard-library && cd cosmosis-standard-library && source cosmosis-configure && pytest -vv tests
+      - cosmosis-build-standard-library -i && cd  `python -c 'import cosmosis;print(cosmosis.__file__)' | xargs dirname` && cd cosmosis-standard-library && cosmosis demos/demo1.ini && cosmosis-postprocess demos/demo1.ini && test -f matter_power.png
+  - requirements:
+      run:
+        - pytest
+        - camb ==1.6.5
     script:
       - cosmosis-build-standard-library && cd cosmosis-standard-library && source cosmosis-configure && pytest -vv tests
       - cosmosis-build-standard-library -i && cd  `python -c 'import cosmosis;print(cosmosis.__file__)' | xargs dirname` && cd cosmosis-standard-library && cosmosis demos/demo1.ini && cosmosis-postprocess demos/demo1.ini && test -f matter_power.png
