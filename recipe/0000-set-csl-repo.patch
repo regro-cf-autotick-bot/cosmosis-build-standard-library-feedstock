@@ -1,0 +1,22 @@
+From 5282bfa645f33dcdbf26184687c330be3f0c67cf Mon Sep 17 00:00:00 2001
+From: "Matthew R. Becker" <beckermr@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 06:33:20 -0600
+Subject: [PATCH] Update cosmosis-build-standard-library
+
+---
+ bin/cosmosis-build-standard-library | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bin/cosmosis-build-standard-library b/bin/cosmosis-build-standard-library
+index c30a22f..ef92ba3 100755
+--- a/bin/cosmosis-build-standard-library
++++ b/bin/cosmosis-build-standard-library
+@@ -41,7 +41,7 @@ echo "Downloading version '$branch'"
+ set -x
+ 
+ # Download and build the standard library
+-git clone --branch ${branch} https://github.com/cosmosis-developers/cosmosis-standard-library
++git clone --branch ${branch} ${CSL_REPO:-"https://github.com/cosmosis-developers/cosmosis-standard-library"}
+ pushd cosmosis-standard-library
+ 
+ # it turns out that if you source a script with no arguments
